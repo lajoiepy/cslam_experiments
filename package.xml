@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>cslam_experiments</name>
+  <version>0.0.0</version>
+  <description>Package for CSLAM Experiments</description>
+  <maintainer email="lajoie.py@gmail.com">Pierre-Yves Lajoie</maintainer>
+  <license>MIT</license>
+
+  <build_depend>cslam</build_depend>
+  <build_depend>cslam_common_interfaces</build_depend>
+  <build_depend>cslam_loop_detection_interfaces</build_depend>
+  <build_depend>gtsam</build_depend>
+  <build_depend>rclcpp</build_depend>
+  <build_depend>rclcpp_components</build_depend>
+
+  <exec_depend>cslam</exec_depend>
+  <exec_depend>cslam_common_interfaces</exec_depend>
+  <exec_depend>cslam_loop_detection_interfaces</exec_depend>
+  <exec_depend>gtsam</exec_depend>
+  <exec_depend>rclcpp</exec_depend>
+  <exec_depend>rclcpp_components</exec_depend>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
