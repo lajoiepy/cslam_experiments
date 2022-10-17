@@ -1,0 +1,38 @@
+/**:
+  ros__parameters:
+    frontend:
+      odom_topic: "odom"
+      pointcloud_topic: "pointcloud"
+      voxel_size: 0.5
+      sensor_type: "lidar"
+      inter_robot_loop_closure_budget: 5
+      inter_robot_detection_period_sec: 5
+      max_keyframe_queue_size: 10
+      similarity_threshold: 0.7
+      global_descriptor_topic: "/global_descriptors"
+      intra_loop_min_inbetween_keyframes: 20
+      global_descriptor_publication_period_sec: 1.0
+      global_descriptor_publication_max_elems_per_msg: 10
+      enable_intra_robot_loop_closures: true
+      keyframe_generation_ratio_threshold: 1.0
+      use_vertex_cover_selection: true
+      map_manager_process_period_ms: 100
+      global_descriptor_technique: "scancontext"
+    neighbor_management:
+      enable_neighbor_monitoring: true
+      max_heartbeat_delay_sec: 5.0
+      init_delay_sec: 5.0
+      heartbeat_period_sec: 1.0
+    backend:
+      pose_graph_optimization_start_period_ms: 10000
+      pose_graph_optimization_loop_period_ms: 100
+      max_waiting_time_sec: 60
+      enable_broadcast_tf_frames: true
+    evaluation:
+      enable_logs: true
+      log_folder: "results"
+      enable_gps_recording: true
+      gps_topic: "gps/fix"
+    visualization:
+      enable: false
+      publishing_period_ms: 1000

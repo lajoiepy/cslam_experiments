@@ -238,7 +238,17 @@ def launch_setup(context, *args, **kwargs):
                 "guess_frame_id": LaunchConfiguration('odom_guess_frame_id').perform(context),
                 "guess_min_translation": LaunchConfiguration('odom_guess_min_translation'),
                 "guess_min_rotation": LaunchConfiguration('odom_guess_min_rotation'),
-                "Icp/MaxTranslation": "5",}],
+                "Icp/MaxTranslation": "5",
+                "queue_size_odom": "100",
+                "ground_normals_up": "true",
+                "Icp/VoxelSize": "0.4",
+                "Icp/MaxCorrespondenceDistance": "4.0",
+                "Icp/PointToPlaneK": "20",
+                "Odom/Strategy": "0",
+                "OdomF2M/ScanSubtractRadius": "0.4",
+                "OdomLOAM/Sensor": "2", # 64 rings
+                "OdomLOAM/Resolution": "0.4" # 64 rings
+                }],
             remappings=[
                 ("scan", LaunchConfiguration('scan_topic')),
                 ("scan_cloud", ''.join([LaunchConfiguration('namespace').perform(context), LaunchConfiguration('scan_cloud_topic').perform(context)])),
@@ -247,7 +257,7 @@ def launch_setup(context, *args, **kwargs):
             arguments=[LaunchConfiguration("args"), LaunchConfiguration("odom_args"),
                 '--ros-args'
                 '--log-level',
-                LaunchConfiguration("log_level")
+                LaunchConfiguration("log_level").perform(context)
                 ], 
             prefix=LaunchConfiguration('launch_prefix'),
             namespace=LaunchConfiguration('namespace')),
@@ -281,7 +291,7 @@ def generate_launch_description():
         DeclareLaunchArgument('publish_tf_map', default_value='true',               description='Publish TF between map and odomerty.'),
         DeclareLaunchArgument('namespace',      default_value='rtabmap',            description=''),
         DeclareLaunchArgument('database_path',  default_value='~/.ros/rtabmap.db',  description='Where is the map saved/loaded.'),
-        DeclareLaunchArgument('queue_size',     default_value='10',                 description=''),
+        DeclareLaunchArgument('queue_size',     default_value='100',                 description=''),
         DeclareLaunchArgument('qos',            default_value='1',                  description='General QoS used for sensor input data: 0=system default, 1=Reliable, 2=Best Effort.'),
         DeclareLaunchArgument('wait_for_transform', default_value='0.2',            description=''),
         DeclareLaunchArgument('rtabmap_args',   default_value='',                   description='Backward compatibility, use "args" instead.'),

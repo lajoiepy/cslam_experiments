@@ -71,7 +71,7 @@ def generate_launch_description():
                                   'config', 'cslam/'),
                               description=''),
         DeclareLaunchArgument('config_file',
-                              default_value='default_kitti.yaml',
+                              default_value='example.yaml',
                               description=''),
         DeclareLaunchArgument('config',
                               default_value=[
@@ -89,14 +89,4 @@ def generate_launch_description():
                               default_value='fatal',
                               description=''),
         OpaqueFunction(function=launch_setup),
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(
-                os.path.join(get_package_share_directory('cslam_tests'), 'launch',
-                             'odometry', 'rtabmap_kitti_lidar_odometry.launch.py')),
-            launch_arguments={
-                'log_level': LaunchConfiguration('log_level'),
-                "robot_id": LaunchConfiguration('robot_id'),
-                "nb_robots": LaunchConfiguration('nb_robots'),
-            }.items(),
-        )
     ])

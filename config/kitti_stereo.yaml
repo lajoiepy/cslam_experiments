@@ -1,10 +1,13 @@
 /**:
   ros__parameters:
     frontend:
+      left_image_topic: "stereo_camera/left/image_rect_color"
+      right_image_topic: "stereo_camera/right/image_rect_color"
+      left_camera_info_topic: "stereo_camera/left/camera_info"
+      right_camera_info_topic: "stereo_camera/right/camera_info"
       odom_topic: "odom"
-      pointcloud_topic: "pointcloud"
-      voxel_size: 0.5
-      sensor_type: "lidar"
+      sensor_base_frame_id: "camera_link"
+      sensor_type: "stereo"
       inter_robot_loop_closure_budget: 5
       inter_robot_detection_period_sec: 5
       max_keyframe_queue_size: 10
@@ -19,13 +22,17 @@
       keyframe_generation_ratio_threshold: 1.0
       use_vertex_cover_selection: true
       map_manager_process_period_ms: 100
-      global_descriptor_technique: "scancontext"
+      global_descriptor_technique: "netvlad"
+      nn_checkpoint: "models/netvlad.pth.tar"
+      netvlad:
+        pca_checkpoint: "models/netvlad_pca.pkl"
     neighbor_management:
       enable_neighbor_monitoring: true
       max_heartbeat_delay_sec: 5.0
+      init_delay_sec: 5.0
       heartbeat_period_sec: 1.0
     backend:
-      pose_graph_manager_process_period_ms: 500
+      pose_graph_optimization_start_period_ms: 1000
       pose_graph_optimization_loop_period_ms: 100
       max_waiting_time_sec: 60
       enable_broadcast_tf_frames: true
@@ -35,5 +42,5 @@
       enable_gps_recording: true
       gps_topic: "gps/fix"
     visualization:
-      enable: true
+      enable: false
       publishing_period_ms: 1000

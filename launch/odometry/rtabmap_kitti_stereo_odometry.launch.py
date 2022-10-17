@@ -453,7 +453,7 @@ def generate_launch_description():
                               description='Configuration path of rviz2.'),
         DeclareLaunchArgument(
             'frame_id',
-            default_value='camera_link',
+            default_value='base_link',
             description=
             'Fixed frame id of the robot (base frame), you may set "base_link" or "base_footprint" if they are published. For camera-only config, this could be "camera_link".'
         ),
@@ -474,7 +474,7 @@ def generate_launch_description():
         DeclareLaunchArgument('log_level',
                               default_value='info',
                               description=''),
-        DeclareLaunchArgument('queue_size', default_value='10',
+        DeclareLaunchArgument('queue_size', default_value='100',
                               description=''),
         DeclareLaunchArgument(
             'qos',
@@ -510,7 +510,7 @@ def generate_launch_description():
         ),
         DeclareLaunchArgument(
             'approx_sync',
-            default_value='false',
+            default_value='true',
             description=
             'If timestamps of the input topics should be synchronized using approximate or exact time policy.'
         ),
