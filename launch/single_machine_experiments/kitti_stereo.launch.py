@@ -42,6 +42,9 @@ def launch_setup(context, *args, **kwargs):
                 "robot_id": str(i),
                 "namespace": "/r" + str(i),
                 "nb_robots": str(nb_robots),
+                "enable_simulated_rendezvous": LaunchConfiguration('enable_simulated_rendezvous'),
+                "rendezvous_schedule_file": os.path.join(get_package_share_directory("cslam_experiments"),
+                             "config", "rendezvous", LaunchConfiguration('rendezvous_config').perform(context)),
             }.items(),
         )
 
@@ -119,13 +122,15 @@ def launch_setup(context, *args, **kwargs):
 def generate_launch_description():
 
     return LaunchDescription([
-        DeclareLaunchArgument('nb_robots', default_value='5'),
+        DeclareLaunchArgument('nb_robots', default_value='2'),
         DeclareLaunchArgument('sequence', default_value='00'),
         DeclareLaunchArgument('startup_delay_s', default_value='120', description="Delay between launching each robot. Ajust depending on the computing power of your machine."),
         DeclareLaunchArgument('bag_delay_s', default_value='10', description="Delay between launching the bag and the robot. In order to let the robot initialize properly and not loose the first bag data frames."),
         DeclareLaunchArgument('config_file',
                               default_value='kitti_stereo.yaml',
                               description=''),
-        DeclareLaunchArgument('rate', default_value='0.5'),
+        DeclareLaunchArgument('rate', default_value='0.2'),
+        DeclareLaunchArgument('enable_simulated_rendezvous', default_value='true'),
+        DeclareLaunchArgument('rendezvous_config', default_value='kitti00_2robots.config'),
         OpaqueFunction(function=launch_setup)
     ])

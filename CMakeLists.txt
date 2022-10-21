@@ -13,7 +13,7 @@ find_package(rclcpp_components REQUIRED)
 
 find_package(cslam REQUIRED)
 find_package(cslam_common_interfaces REQUIRED)
-find_package(cslam_loop_detection_interfaces REQUIRED)
+find_package(cslam_common_interfaces REQUIRED)
 
 find_package(launch_testing_ament_cmake REQUIRED)
 

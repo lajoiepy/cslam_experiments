@@ -46,9 +46,11 @@ def launch_setup(context, *args, **kwargs):
                                            LaunchConfiguration('robot_id'),
                                            "nb_robots":
                                            LaunchConfiguration('nb_robots'),
+                                           "evaluation.enable_simulated_rendezvous": LaunchConfiguration('enable_simulated_rendezvous'),
+                                           "evaluation.rendezvous_schedule_file": LaunchConfiguration('rendezvous_schedule_file'),
                                        }
                                    ],
-                                   prefix=LaunchConfiguration('launch_prefix_cslam'),
+                                   prefix=LaunchConfiguration('launch_prefix_cslam'),# "gdbserver localhost:3000",
                                    namespace=LaunchConfiguration('namespace'))
 
     return [
@@ -85,6 +87,12 @@ def generate_launch_description():
             description=
             'For debugging purpose, it fills prefix tag of the nodes, e.g., "xterm -e gdb -ex run --args"'
         ),
+        DeclareLaunchArgument('enable_simulated_rendezvous',
+                              default_value='false',
+                              description=''),
+        DeclareLaunchArgument('rendezvous_schedule_file',
+                              default_value='',
+                              description=''),
         DeclareLaunchArgument('log_level',
                               default_value='error',
                               description=''),
