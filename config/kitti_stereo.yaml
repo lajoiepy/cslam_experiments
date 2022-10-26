@@ -8,20 +8,21 @@
       odom_topic: "odom"
       sensor_base_frame_id: "camera_link"
       sensor_type: "stereo"
-      inter_robot_loop_closure_budget: 1
-      inter_robot_detection_period_sec: 2
+      inter_robot_loop_closure_budget: 10
+      inter_robot_detection_period_sec: 5
       max_keyframe_queue_size: 10
       similarity_threshold: 0.5
       global_descriptors_topic: "/global_descriptors"
       image_crop_size: 376
       intra_loop_min_inbetween_keyframes: 20
-      pnp_min_inliers: 8
+      pnp_min_inliers: 20
       detection_publication_period_sec: 1.0
       detection_publication_max_elems_per_msg: 10
       enable_intra_robot_loop_closures: true
       keyframe_generation_ratio_threshold: 1.0
       use_vertex_cover_selection: true
       map_manager_process_period_ms: 100
+      enable_sparsification: true
       global_descriptor_technique: "netvlad"
       nn_checkpoint: "models/netvlad.pth.tar"
       netvlad:
