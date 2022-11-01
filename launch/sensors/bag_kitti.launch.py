@@ -45,7 +45,10 @@ def launch_setup(context, *args, **kwargs):
                         '/pointcloud',
                         '/kitti/oxts/gps/fix:=' +
                         LaunchConfiguration('namespace').perform(context) +
-                        '/gps/fix'
+                        '/gps/fix',
+                        '/kitti/oxts/imu:=' +
+                        LaunchConfiguration('namespace').perform(context) +
+                        '/imu/data'
                     ],
                     name='bag',
                     output='screen',
