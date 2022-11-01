@@ -17,8 +17,8 @@ def launch_setup(context, *args, **kwargs):
                                    LaunchConfiguration('config'), {
                                        "robot_id":
                                        LaunchConfiguration('robot_id'),
-                                       "nb_robots":
-                                       LaunchConfiguration('nb_robots'),
+                                       "max_nb_robots":
+                                       LaunchConfiguration('max_nb_robots'),
                                    }
                                ],
                                namespace=LaunchConfiguration('namespace'))
@@ -30,8 +30,8 @@ def launch_setup(context, *args, **kwargs):
                                 LaunchConfiguration('config'), {
                                     "robot_id":
                                     LaunchConfiguration('robot_id'),
-                                    "nb_robots":
-                                    LaunchConfiguration('nb_robots'),
+                                    "max_nb_robots":
+                                    LaunchConfiguration('max_nb_robots'),
                                 }
                             ],
                             prefix=LaunchConfiguration('launch_prefix_cslam'),
@@ -44,8 +44,8 @@ def launch_setup(context, *args, **kwargs):
                                        LaunchConfiguration('config'), {
                                            "robot_id":
                                            LaunchConfiguration('robot_id'),
-                                           "nb_robots":
-                                           LaunchConfiguration('nb_robots'),
+                                           "max_nb_robots":
+                                           LaunchConfiguration('max_nb_robots'),
                                            "evaluation.enable_simulated_rendezvous": LaunchConfiguration('enable_simulated_rendezvous'),
                                            "evaluation.rendezvous_schedule_file": LaunchConfiguration('rendezvous_schedule_file'),
                                        }
@@ -66,7 +66,7 @@ def generate_launch_description():
         DeclareLaunchArgument('namespace', default_value='/r0',
                               description=''),
         DeclareLaunchArgument('robot_id', default_value='0', description=''),
-        DeclareLaunchArgument('nb_robots', default_value='1', description=''),
+        DeclareLaunchArgument('max_nb_robots', default_value='1', description=''),
         DeclareLaunchArgument('config_path',
                               default_value=os.path.join(
                                   get_package_share_directory('cslam'),

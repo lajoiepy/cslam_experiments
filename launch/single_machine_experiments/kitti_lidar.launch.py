@@ -17,7 +17,7 @@ def launch_setup(context, *args, **kwargs):
     config_file = LaunchConfiguration('config_file').perform(context)
 
     # Params
-    nb_robots = int(LaunchConfiguration('nb_robots').perform(context))
+    max_nb_robots = int(LaunchConfiguration('max_nb_robots').perform(context))
     dataset = "KITTI" + LaunchConfiguration('sequence').perform(context)
     robot_delay_s = LaunchConfiguration('robot_delay_s').perform(context)  
     launch_delay_s = LaunchConfiguration('launch_delay_s').perform(context)  
@@ -31,7 +31,7 @@ def launch_setup(context, *args, **kwargs):
     bag_processes = []
     odom_processes = []
 
-    for i in range(nb_robots):
+    for i in range(max_nb_robots):
         proc = IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(get_package_share_directory("cslam_experiments"),
@@ -41,7 +41,7 @@ def launch_setup(context, *args, **kwargs):
                 "config_file": config_file,
                 "robot_id": str(i),
                 "namespace": "/r" + str(i),
-                "nb_robots": str(nb_robots),
+                "max_nb_robots": str(max_nb_robots),
                 "enable_simulated_rendezvous": LaunchConfiguration('enable_simulated_rendezvous'),
                 "rendezvous_schedule_file": os.path.join(get_package_share_directory("cslam_experiments"),
                              "config", "rendezvous", LaunchConfiguration('rendezvous_config').perform(context)),
@@ -52,7 +52,7 @@ def launch_setup(context, *args, **kwargs):
 
         bag_file = os.path.join(
             get_package_share_directory("cslam_experiments"), "data",
-            dataset + "_" + str(nb_robots) + "robots", dataset + "-" + str(i))
+            dataset + "_" + str(max_nb_robots) + "robots", dataset + "-" + str(i))
 
         bag_proc = IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
@@ -78,7 +78,7 @@ def launch_setup(context, *args, **kwargs):
             launch_arguments={
                 'log_level': "fatal",
                 "robot_id": str(i),
-                "nb_robots": LaunchConfiguration('nb_robots'),
+                "max_nb_robots": LaunchConfiguration('max_nb_robots'),
             }.items(),
         )
 
@@ -97,7 +97,7 @@ def launch_setup(context, *args, **kwargs):
     # Launch schedule
     schedule = []
 
-    for i in range(nb_robots):
+    for i in range(max_nb_robots):
         schedule.append(PushLaunchConfigurations())
         schedule.append(
             TimerAction(period=float(robot_delay_s) * i,
@@ -109,7 +109,7 @@ def launch_setup(context, *args, **kwargs):
                         actions=[odom_processes[i]]))
         schedule.append(PopLaunchConfigurations())        
 
-    for i in range(nb_robots):
+    for i in range(max_nb_robots):
         schedule.append(PushLaunchConfigurations())
         schedule.append(
             TimerAction(period=float(robot_delay_s) * i + float(launch_delay_s),
@@ -125,7 +125,7 @@ def launch_setup(context, *args, **kwargs):
 def generate_launch_description():
 
     return LaunchDescription([
-        DeclareLaunchArgument('nb_robots', default_value='2'),
+        DeclareLaunchArgument('max_nb_robots', default_value='2'),
         DeclareLaunchArgument('sequence', default_value='00'),
         DeclareLaunchArgument('robot_delay_s', default_value='260', description="Delay between launching each robot. Ajust depending on the computing power of your machine."),
         DeclareLaunchArgument('launch_delay_s', default_value='10', description="Delay between launching the bag and the robot. In order to let the robot initialize properly and not loose the first bag data frames."),

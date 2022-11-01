@@ -5,11 +5,11 @@
       sensor_type: "lidar"
       pointcloud_topic: "pointcloud"
       voxel_size: 0.5
-      matching_min_inliers: 100
+      matching_min_inliers: 20
       inter_robot_loop_closure_budget: 10
       inter_robot_detection_period_sec: 5
       max_keyframe_queue_size: 10
-      similarity_threshold: 0.7
+      similarity_threshold: 0.5
       global_descriptors_topic: "/global_descriptors"
       intra_loop_min_inbetween_keyframes: 20
       detection_publication_period_sec: 1.0
