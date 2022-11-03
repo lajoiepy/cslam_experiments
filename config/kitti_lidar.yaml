@@ -5,8 +5,8 @@
       sensor_type: "lidar"
       pointcloud_topic: "pointcloud"
       voxel_size: 0.5
-      matching_min_inliers: 20
-      inter_robot_loop_closure_budget: 10
+      matching_min_inliers: 100
+      inter_robot_loop_closure_budget: 1
       inter_robot_detection_period_sec: 5
       max_keyframe_queue_size: 10
       similarity_threshold: 0.5
@@ -37,5 +37,5 @@
       gps_topic: "gps/fix"
       enable_sparsification_comparison: true
     visualization:
-      enable: false
+      enable: true
       publishing_period_ms: 1000
