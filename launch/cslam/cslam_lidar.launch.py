@@ -69,11 +69,11 @@ def generate_launch_description():
         DeclareLaunchArgument('max_nb_robots', default_value='1', description=''),
         DeclareLaunchArgument('config_path',
                               default_value=os.path.join(
-                                  get_package_share_directory('cslam'),
-                                  'config', 'cslam/'),
+                                  get_package_share_directory('cslam_experiments'),
+                                  'config/'),
                               description=''),
         DeclareLaunchArgument('config_file',
-                              default_value='example.yaml',
+                              default_value='kitti_lidar.yaml',
                               description=''),
         DeclareLaunchArgument('config',
                               default_value=[
