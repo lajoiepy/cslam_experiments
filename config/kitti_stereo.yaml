@@ -23,10 +23,8 @@
       use_vertex_cover_selection: true
       map_manager_process_period_ms: 100
       enable_sparsification: true
-      global_descriptor_technique: "netvlad"
-      nn_checkpoint: "models/netvlad.pth.tar"
-      netvlad:
-        pca_checkpoint: "models/netvlad_pca.pkl"
+      global_descriptor_technique: "cosplace"
+      nn_checkpoint: "models/resnet18_64.pth.tar"
     neighbor_management:
       enable_neighbor_monitoring: true
       max_heartbeat_delay_sec: 5.0
