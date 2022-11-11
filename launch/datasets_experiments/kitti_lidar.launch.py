@@ -76,9 +76,9 @@ def launch_setup(context, *args, **kwargs):
                 os.path.join(get_package_share_directory('cslam_experiments'), 'launch',
                              'odometry', 'rtabmap_kitti_lidar_odometry.launch.py')),
             launch_arguments={
-                'log_level': "fatal",
+                "namespace": "/r" + str(i),
                 "robot_id": str(i),
-                "max_nb_robots": LaunchConfiguration('max_nb_robots'),
+                'log_level': "fatal",
             }.items(),
         )
 

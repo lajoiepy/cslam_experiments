@@ -91,8 +91,8 @@ def launch_setup(context, *args, **kwargs):
                 "Icp/PointToPlaneK": "20",
                 "Odom/Strategy": "0",
                 "OdomF2M/ScanSubtractRadius": "0.4",
-                "OdomLOAM/Sensor": "2", # 64 rings
-                "OdomLOAM/Resolution": "0.4"
+                "OdomLOAM/Sensor": "1", # 32 rings
+                "OdomLOAM/Resolution": "0.4" 
                 }],
             remappings=[
                 ("scan", LaunchConfiguration('scan_topic')),

@@ -18,7 +18,7 @@ def launch_setup(context, *args, **kwargs):
 
     # Params
     max_nb_robots = int(LaunchConfiguration('max_nb_robots').perform(context))
-    dataset = "KITTI" + LaunchConfiguration('sequence').perform(context)
+    dataset = "M2DGR-Gate"
     robot_delay_s = LaunchConfiguration('robot_delay_s').perform(context)  
     launch_delay_s = LaunchConfiguration('launch_delay_s').perform(context)  
     rate = float(LaunchConfiguration('rate').perform(context))
@@ -35,16 +35,13 @@ def launch_setup(context, *args, **kwargs):
         proc = IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(get_package_share_directory("cslam_experiments"),
-                             "launch", "cslam", "cslam_stereo.launch.py")),
+                             "launch", "cslam", "cslam_lidar.launch.py")),
             launch_arguments={
                 "config_path": config_path,
                 "config_file": config_file,
                 "robot_id": str(i),
                 "namespace": "/r" + str(i),
                 "max_nb_robots": str(max_nb_robots),
-                "enable_simulated_rendezvous": LaunchConfiguration('enable_simulated_rendezvous'),
-                "rendezvous_schedule_file": os.path.join(get_package_share_directory("cslam_experiments"),
-                             "config", "rendezvous", LaunchConfiguration('rendezvous_config').perform(context)),
             }.items(),
         )
 
@@ -52,7 +49,7 @@ def launch_setup(context, *args, **kwargs):
 
         bag_file = os.path.join(
             get_package_share_directory("cslam_experiments"), "data",
-            dataset + "_" + str(max_nb_robots) + "robots", dataset + "-" + str(i))
+            dataset, dataset + "-" + str(i))
 
         bag_proc = IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
@@ -60,7 +57,7 @@ def launch_setup(context, *args, **kwargs):
                     get_package_share_directory("cslam_experiments"),
                     "launch",
                     "sensors",
-                    "bag_kitti.launch.py",
+                    "bag_m2dgr.launch.py",
                 )),
             launch_arguments={
                 "namespace": "/r" + str(i),
@@ -74,23 +71,21 @@ def launch_setup(context, *args, **kwargs):
         odom_proc = IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(get_package_share_directory('cslam_experiments'), 'launch',
-                             'odometry', 'rtabmap_kitti_stereo_odometry.launch.py')),
+                             'odometry', 'rtabmap_m2dgr_lidar_odometry.launch.py')),
             launch_arguments={
-                'log_level': "fatal",
+                "namespace": "/r" + str(i),
                 "robot_id": str(i),
-                "max_nb_robots": LaunchConfiguration('max_nb_robots'),
+                'log_level': "fatal",
             }.items(),
         )
 
         odom_processes.append(odom_proc)
 
     # KITTI specific transform
-    tf_process = Node(
-        package="tf2_ros",
-        executable="static_transform_publisher",
-        arguments="0 0 0 0 0 0 camera_gray_left camera_link".split(" "),
-        parameters=[]
-    )
+    tf_process = Node(package="tf2_ros",
+                      executable="static_transform_publisher",
+                      arguments="0.27255 -0.00053 0.17954 0 0 0 base_link velodyne".split(" "),
+                      parameters=[])
 
     # Launch schedule
     schedule = []
@@ -122,15 +117,12 @@ def launch_setup(context, *args, **kwargs):
 def generate_launch_description():
 
     return LaunchDescription([
-        DeclareLaunchArgument('max_nb_robots', default_value='2'),
-        DeclareLaunchArgument('sequence', default_value='00'),
+        DeclareLaunchArgument('max_nb_robots', default_value='1'),
         DeclareLaunchArgument('robot_delay_s', default_value='240', description="Delay between launching each robot. Ajust depending on the computing power of your machine."),
         DeclareLaunchArgument('launch_delay_s', default_value='10', description="Delay between launching the bag and the robot. In order to let the robot initialize properly and not loose the first bag data frames."),
         DeclareLaunchArgument('config_file',
-                              default_value='kitti_stereo.yaml',
+                              default_value='m2dgr.yaml',
                               description=''),
         DeclareLaunchArgument('rate', default_value='0.5'),
-        DeclareLaunchArgument('enable_simulated_rendezvous', default_value='true'),
-        DeclareLaunchArgument('rendezvous_config', default_value='kitti00_2robots.config'),
         OpaqueFunction(function=launch_setup)
     ])
