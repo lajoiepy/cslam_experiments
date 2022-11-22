@@ -1,0 +1,49 @@
+/**:
+  ros__parameters:
+    frontend:
+      left_image_topic: "stereo_camera/left/image_color"
+      right_image_topic: "stereo_camera/right/image_color"
+      left_camera_info_topic: "stereo_camera/left/camera_info"
+      right_camera_info_topic: "stereo_camera/right/camera_info"
+      odom_topic: "odom"
+      sensor_base_frame_id: "camera_link"
+      sensor_type: "stereo"
+      inter_robot_loop_closure_budget: 100
+      inter_robot_detection_period_sec: 5
+      max_queue_size: 10
+      similarity_threshold: 0.7
+      global_descriptors_topic: "/global_descriptors"
+      image_crop_size: 376
+      intra_loop_min_inbetween_keyframes: 20
+      pnp_min_inliers: 20
+      detection_publication_period_sec: 1.0
+      detection_publication_max_elems_per_msg: 10
+      enable_intra_robot_loop_closures: true
+      keyframe_generation_ratio_threshold: 1.0
+      use_vertex_cover_selection: true
+      map_manager_process_period_ms: 100
+      enable_sparsification: true
+      global_descriptor_technique: "cosplace"
+      nn_checkpoint: "models/resnet18_64.pth"
+      cosplace:
+        backbone: "resnet18"
+        descriptor_dim: 64
+    neighbor_management:
+      enable_neighbor_monitoring: true
+      max_heartbeat_delay_sec: 5.0
+      init_delay_sec: 5.0
+      heartbeat_period_sec: 1.0
+    backend:
+      pose_graph_optimization_start_period_ms: 10000
+      pose_graph_optimization_loop_period_ms: 100
+      max_waiting_time_sec: 60
+      enable_broadcast_tf_frames: true
+    evaluation:
+      enable_logs: true
+      log_folder: "results"
+      enable_gps_recording: false
+      enable_pose_timestamps_recording: true
+      enable_sparsification_comparison: true
+    visualization:
+      enable: false
+      publishing_period_ms: 1000

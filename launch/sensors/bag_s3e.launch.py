@@ -29,7 +29,15 @@ def launch_setup(context, *args, **kwargs):
                         LaunchConfiguration('rate'), '--remap',
                         '/Alpha/imu/data:=' +
                         LaunchConfiguration('namespace').perform(context) +
-                        '0/imu/data'
+                        '0/imu/data',
+                        LaunchConfiguration('rate'), '--remap',
+                        '/Bob/imu/data:=' +
+                        LaunchConfiguration('namespace').perform(context) +
+                        '1/imu/data',
+                        LaunchConfiguration('rate'), '--remap',
+                        '/Carol/imu/data:=' +
+                        LaunchConfiguration('namespace').perform(context) +
+                        '2/imu/data'
                     ],
                     name='bag',
                     output='screen',
@@ -51,6 +59,41 @@ def launch_setup(context, *args, **kwargs):
                  'out:=' + LaunchConfiguration('namespace').perform(context) +
                  '0/stereo_camera/right/image_color'
                  ]),
+
+        Node(package='image_transport',
+             executable='republish',
+             name='republish',
+             arguments=[
+                 'compressed', 'raw', '--ros-args', '--remap', '/in/compressed:=/Bob/left_camera/compressed', '--remap',
+                 'out:=' + LaunchConfiguration('namespace').perform(context) +
+                 '1/stereo_camera/left/image_color'
+                 ]),
+        Node(package='image_transport',
+             executable='republish',
+             name='republish',
+             arguments=[
+              'compressed', 'raw', '--ros-args', '--remap', '/in/compressed:=/Bob/right_camera/compressed', '--remap',
+                 'out:=' + LaunchConfiguration('namespace').perform(context) +
+                 '1/stereo_camera/right/image_color'
+                 ]),
+
+        Node(package='image_transport',
+             executable='republish',
+             name='republish',
+             arguments=[
+                 'compressed', 'raw', '--ros-args', '--remap', '/in/compressed:=/Carol/left_camera/compressed', '--remap',
+                 'out:=' + LaunchConfiguration('namespace').perform(context) +
+                 '2/stereo_camera/left/image_color'
+                 ]),
+        Node(package='image_transport',
+             executable='republish',
+             name='republish',
+             arguments=[
+              'compressed', 'raw', '--ros-args', '--remap', '/in/compressed:=/Carol/right_camera/compressed', '--remap',
+                 'out:=' + LaunchConfiguration('namespace').perform(context) +
+                 '2/stereo_camera/right/image_color'
+                 ]),
+
         Node(package='cslam_experiments',
              executable='publish_stereo_calibration_s3e.py',
              name='calibration_publisher',
@@ -59,6 +102,29 @@ def launch_setup(context, *args, **kwargs):
                             "robot_id": 0,
                             "frontend.stereo_calibration_file": os.path.join(get_package_share_directory('cslam_experiments'),
                                   'config', 's3e', 'alpha.yaml'),
+                        }
+                    ]),
+
+
+        Node(package='cslam_experiments',
+             executable='publish_stereo_calibration_s3e.py',
+             name='calibration_publisher',
+             parameters=[
+                        {
+                            "robot_id": 1,
+                            "frontend.stereo_calibration_file": os.path.join(get_package_share_directory('cslam_experiments'),
+                                  'config', 's3e', 'bob.yaml'),
+                        }
+                    ]),
+
+        Node(package='cslam_experiments',
+             executable='publish_stereo_calibration_s3e.py',
+             name='calibration_publisher',
+             parameters=[
+                        {
+                            "robot_id": 2,
+                            "frontend.stereo_calibration_file": os.path.join(get_package_share_directory('cslam_experiments'),
+                                  'config', 's3e', 'carol.yaml'),
                         }
                     ]),
     ]
