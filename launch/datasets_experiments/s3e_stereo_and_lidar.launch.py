@@ -50,22 +50,15 @@ def launch_setup(context, *args, **kwargs):
         odom_proc = IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(get_package_share_directory('cslam_experiments'), 'launch',
-                             'odometry', 'rtabmap_s3e_stereo_odometry.launch.py')),
+                             'odometry', 'rtabmap_s3e_lidar_odometry.launch.py')),
             launch_arguments={
-                'log_level': "fatal",
+                'log_level': "info",
+                "namespace": "/r" + str(i),
                 "robot_id": str(i),
             }.items(),
         )
 
         odom_processes.append(odom_proc)
-
-    # S3E specific transform
-    tf_process = Node(
-        package="tf2_ros",
-        executable="static_transform_publisher",
-        arguments="0 0 0 0 0 0 camera_gray_left camera_link".split(" "),
-        parameters=[]
-    )
 
     # Launch schedule
     schedule = []
@@ -78,7 +71,6 @@ def launch_setup(context, *args, **kwargs):
         schedule.append(odom_processes[i])
         schedule.append(PopLaunchConfigurations())        
 
-    schedule.append(tf_process)
     bag_file = os.path.join(
             get_package_share_directory("cslam_experiments"), "data",
             dataset)
@@ -108,13 +100,13 @@ def launch_setup(context, *args, **kwargs):
 def generate_launch_description():
 
     return LaunchDescription([
-        DeclareLaunchArgument('max_nb_robots', default_value='2'),
+        DeclareLaunchArgument('max_nb_robots', default_value='3'),
         DeclareLaunchArgument('launch_delay_s', default_value='10', description="Delay between launching the bag and the robot. In order to let the robot initialize properly and not loose the first bag data frames."),
         DeclareLaunchArgument('config_file',
-                              default_value='s3e_stereo.yaml',
+                              default_value='s3e_stereo_and_lidar.yaml',
                               description=''),
         DeclareLaunchArgument('rate', default_value='0.5'),
-        DeclareLaunchArgument('enable_simulated_rendezvous', default_value='false'),
-        DeclareLaunchArgument('rendezvous_config', default_value='s3e_3robots.config'),
+        DeclareLaunchArgument('enable_simulated_rendezvous', default_value='true'),
+        DeclareLaunchArgument('rendezvous_config', default_value='s3e_college.config'),
         OpaqueFunction(function=launch_setup)
     ])

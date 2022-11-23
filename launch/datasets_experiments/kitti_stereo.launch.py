@@ -76,6 +76,7 @@ def launch_setup(context, *args, **kwargs):
                 os.path.join(get_package_share_directory('cslam_experiments'), 'launch',
                              'odometry', 'rtabmap_kitti_stereo_odometry.launch.py')),
             launch_arguments={
+                "namespace": "/r" + str(i),
                 'log_level': "fatal",
                 "robot_id": str(i),
             }.items(),
