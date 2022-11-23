@@ -50,7 +50,7 @@ def launch_setup(context, *args, **kwargs):
         odom_proc = IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(get_package_share_directory('cslam_experiments'), 'launch',
-                             'odometry', 'rtabmap_s3e_lidar_odometry.launch.py')),
+                             'odometry', 'rtabmap_s3e_stereo_odometry.launch.py')),
             launch_arguments={
                 'log_level': "info",
                 "namespace": "/r" + str(i),

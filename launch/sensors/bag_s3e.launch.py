@@ -8,17 +8,57 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 from launch_ros.actions import SetParameter
+from launch_ros.actions import ComposableNodeContainer
+from launch_ros.actions import LoadComposableNodes
+from launch_ros.descriptions import ComposableNode
 
 
 def launch_setup(context, *args, **kwargs):
 
+    rectification_nodes = []
+    for i in range(int(LaunchConfiguration('max_nb_robots').perform(context))):
+        rectification_nodes.append(
+            ComposableNode(
+                package='image_proc',
+                plugin='image_proc::RectifyNode',
+                name='rectify_color_node',
+                # Remap subscribers and publishers
+                remappings=[
+                    ('image', LaunchConfiguration('namespace').perform(context) + str(i) + '/stereo_camera/left/image_raw'),
+                    ('camera_info', LaunchConfiguration('namespace').perform(context) + str(i) + '/stereo_camera/left/camera_info'),
+                    ('image_rect', LaunchConfiguration('namespace').perform(context) + str(i) + '/stereo_camera/left/image_color'),
+                ],
+            ))
+        rectification_nodes.append(ComposableNode(
+                package='image_proc',
+                plugin='image_proc::RectifyNode',
+                name='rectify_color_node',
+                # Remap subscribers and publishers
+                remappings=[
+                    ('image', LaunchConfiguration('namespace').perform(context) + str(i) + '/stereo_camera/right/image_raw'),
+                    ('camera_info', LaunchConfiguration('namespace').perform(context) + str(i) + '/stereo_camera/right/camera_info'),
+                    ('image_rect', LaunchConfiguration('namespace').perform(context) + str(i) + '/stereo_camera/right/image_color'),
+                ],
+            ))
+        rectification_container = ComposableNodeContainer(
+            name='image_proc_container',
+            namespace=LaunchConfiguration('namespace').perform(context),
+            package='rclcpp_components',
+            executable='component_container',
+            composable_node_descriptions=rectification_nodes,
+            output='screen'
+        )
+        load_composable_nodes = LoadComposableNodes(
+            composable_node_descriptions=rectification_nodes
+        )
+
     return [
-        DeclareLaunchArgument('bag_file', default_value='', description=''),
-        DeclareLaunchArgument('namespace', default_value='/r', description=''),
-        DeclareLaunchArgument('rate', default_value='1.0', description=''),
-        DeclareLaunchArgument('bag_start_delay',
-                              default_value='5.0',
-                              description=''),
+        PushLaunchConfigurations(),
+        rectification_container,
+        PopLaunchConfigurations(),
+        PushLaunchConfigurations(),
+        load_composable_nodes,
+        PopLaunchConfigurations(),
         PushLaunchConfigurations(),
         TimerAction(
             period=LaunchConfiguration('bag_start_delay'),
@@ -57,7 +97,7 @@ def launch_setup(context, *args, **kwargs):
              arguments=[
                  'compressed', 'raw', '--ros-args', '--remap', '/in/compressed:=/Alpha/left_camera/compressed', '--remap',
                  'out:=' + LaunchConfiguration('namespace').perform(context) +
-                 '0/stereo_camera/left/image_color'
+                 '0/stereo_camera/left/image_raw'
                  ]),
         PopLaunchConfigurations(),
         PushLaunchConfigurations(),
@@ -67,7 +107,7 @@ def launch_setup(context, *args, **kwargs):
              arguments=[
               'compressed', 'raw', '--ros-args', '--remap', '/in/compressed:=/Alpha/right_camera/compressed', '--remap',
                  'out:=' + LaunchConfiguration('namespace').perform(context) +
-                 '0/stereo_camera/right/image_color'
+                 '0/stereo_camera/right/image_raw'
                  ]),
         PopLaunchConfigurations(),
 
@@ -78,7 +118,7 @@ def launch_setup(context, *args, **kwargs):
              arguments=[
                  'compressed', 'raw', '--ros-args', '--remap', '/in/compressed:=/Bob/left_camera/compressed', '--remap',
                  'out:=' + LaunchConfiguration('namespace').perform(context) +
-                 '1/stereo_camera/left/image_color'
+                 '1/stereo_camera/left/image_raw'
                  ]),
         PopLaunchConfigurations(),
         PushLaunchConfigurations(),
@@ -88,7 +128,7 @@ def launch_setup(context, *args, **kwargs):
              arguments=[
               'compressed', 'raw', '--ros-args', '--remap', '/in/compressed:=/Bob/right_camera/compressed', '--remap',
                  'out:=' + LaunchConfiguration('namespace').perform(context) +
-                 '1/stereo_camera/right/image_color'
+                 '1/stereo_camera/right/image_raw'
                  ]),
         PopLaunchConfigurations(),
 
@@ -99,7 +139,7 @@ def launch_setup(context, *args, **kwargs):
              arguments=[
                  'compressed', 'raw', '--ros-args', '--remap', '/in/compressed:=/Carol/left_camera/compressed', '--remap',
                  'out:=' + LaunchConfiguration('namespace').perform(context) +
-                 '2/stereo_camera/left/image_color'
+                 '2/stereo_camera/left/image_raw'
                  ]),
         PopLaunchConfigurations(),
         PushLaunchConfigurations(),
@@ -109,7 +149,7 @@ def launch_setup(context, *args, **kwargs):
              arguments=[
               'compressed', 'raw', '--ros-args', '--remap', '/in/compressed:=/Carol/right_camera/compressed', '--remap',
                  'out:=' + LaunchConfiguration('namespace').perform(context) +
-                 '2/stereo_camera/right/image_color'
+                 '2/stereo_camera/right/image_raw'
                  ]),
         PopLaunchConfigurations(),
 
@@ -173,4 +213,11 @@ def launch_setup(context, *args, **kwargs):
 
 def generate_launch_description():
 
-    return LaunchDescription([OpaqueFunction(function=launch_setup)])
+    return LaunchDescription([
+        DeclareLaunchArgument('bag_file', default_value='', description=''),
+        DeclareLaunchArgument('namespace', default_value='/r', description=''),
+        DeclareLaunchArgument('rate', default_value='1.0', description=''),
+        DeclareLaunchArgument('bag_start_delay',
+                              default_value='5.0',
+                              description=''),
+        OpaqueFunction(function=launch_setup)])
