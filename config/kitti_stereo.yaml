@@ -8,7 +8,7 @@
       odom_topic: "odom"
       sensor_base_frame_id: "camera_link"
       sensor_type: "stereo"
-      inter_robot_loop_closure_budget: 100
+      inter_robot_loop_closure_budget: 1
       inter_robot_detection_period_sec: 5
       max_queue_size: 10
       similarity_threshold: 0.7

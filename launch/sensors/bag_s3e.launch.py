@@ -49,7 +49,8 @@ def launch_setup(context, *args, **kwargs):
             output='screen'
         )
         load_composable_nodes = LoadComposableNodes(
-            composable_node_descriptions=rectification_nodes
+            composable_node_descriptions=rectification_nodes,
+            target_container=rectification_container
         )
 
     return [
@@ -157,6 +158,7 @@ def launch_setup(context, *args, **kwargs):
         Node(package='cslam_experiments',
              executable='publish_stereo_calibration_s3e.py',
              name='calibration_publisher',
+             namespace=LaunchConfiguration('namespace').perform(context) + '0',
              parameters=[
                         {
                             "robot_id": 0,
@@ -171,6 +173,7 @@ def launch_setup(context, *args, **kwargs):
         Node(package='cslam_experiments',
              executable='publish_stereo_calibration_s3e.py',
              name='calibration_publisher',
+             namespace=LaunchConfiguration('namespace').perform(context)+ '1',
              parameters=[
                         {
                             "robot_id": 1,
@@ -184,6 +187,7 @@ def launch_setup(context, *args, **kwargs):
         Node(package='cslam_experiments',
              executable='publish_stereo_calibration_s3e.py',
              name='calibration_publisher',
+             namespace=LaunchConfiguration('namespace').perform(context)+ '2',
              parameters=[
                         {
                             "robot_id": 2,

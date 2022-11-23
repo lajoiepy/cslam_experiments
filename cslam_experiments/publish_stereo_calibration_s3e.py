@@ -27,9 +27,9 @@ class CalibrationPublisher(Node):
 
         # Subscribe to the stereo images
         self.sub_left = self.create_subscription(
-            Image, '/r{}/stereo_camera/left/image_color'.format(self.params['robot_id']), self.left_callback, 10)
+            Image, '/r{}/stereo_camera/left/image_raw'.format(self.params['robot_id']), self.left_callback, 10)
         self.sub_right = self.create_subscription(  
-            Image, '/r{}/stereo_camera/right/image_color'.format(self.params['robot_id']), self.right_callback, 10)
+            Image, '/r{}/stereo_camera/right/image_raw'.format(self.params['robot_id']), self.right_callback, 10)
 
         # Publish the stereo calibration
         self.pub_left = self.create_publisher(CameraInfo, '/r{}/stereo_camera/left/camera_info'.format(self.params['robot_id']), 10)
