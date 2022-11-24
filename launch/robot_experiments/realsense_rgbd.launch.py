@@ -17,7 +17,7 @@ def launch_setup(context, *args, **kwargs):
     cslam_proc = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(get_package_share_directory("cslam_experiments"),
-                         "launch", "cslam", "cslam_stereo.launch.py")),
+                         "launch", "cslam", "cslam_rgbd.launch.py")),
         launch_arguments={
             "config_path": os.path.join(get_package_share_directory("cslam_experiments"), "config/"),
             "config_file": LaunchConfiguration('cslam_config_file').perform(context),
