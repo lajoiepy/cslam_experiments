@@ -7,7 +7,8 @@ def launch_setup(context, *args, **kwargs):
     parameters=[{
           'frame_id': LaunchConfiguration('namespace').perform(context)[1:] + '_link',
           'subscribe_depth':True,
-          'approx_sync':False}]
+          'approx_sync':False, # Set to True for OAK-D
+          }]
 
     remappings=[
           ('rgb/image', LaunchConfiguration('namespace').perform(context) + '/color/image_raw'),
@@ -18,9 +19,10 @@ def launch_setup(context, *args, **kwargs):
     return [
         # Nodes to launch
         Node(
-            package='rtabmap_ros', executable='rgbd_odometry', output='screen',
+            package='rtabmap_ros', executable='rgbd_odometry', output='screen', name='rgbd_odometry',
             parameters=parameters,
-            remappings=remappings),
+            remappings=remappings,
+            ),
     ]
 
 def generate_launch_description():
