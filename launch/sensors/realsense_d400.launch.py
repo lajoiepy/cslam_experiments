@@ -20,6 +20,10 @@ def launch_setup(context, *args, **kwargs):
                              "launch", "rs_launch.py")),
             launch_arguments={
                 "align_depth.enable": "true",
+                "enable_sync": "true",
+                "log_level": "warn",
+                "rgb_camera.profile": "424,240,30",
+                "depth_module.profile": "424,240,30",
                 "camera_name": LaunchConfiguration('namespace').perform(context)[1:],
             }.items(),
         )
