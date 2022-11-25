@@ -43,5 +43,5 @@
       gps_topic: "gps/fix"
       enable_sparsification_comparison: true
     visualization:
-      enable: false
+      enable: true
       publishing_period_ms: 1000
