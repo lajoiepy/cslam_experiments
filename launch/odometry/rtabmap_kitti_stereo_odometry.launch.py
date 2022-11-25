@@ -474,7 +474,7 @@ def generate_launch_description():
         DeclareLaunchArgument('log_level',
                               default_value='info',
                               description=''),
-        DeclareLaunchArgument('queue_size', default_value='100',
+        DeclareLaunchArgument('queue_size', default_value='20',
                               description=''),
         DeclareLaunchArgument(
             'qos',

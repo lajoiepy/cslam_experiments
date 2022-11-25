@@ -24,10 +24,10 @@
       map_manager_process_period_ms: 100
       enable_sparsification: true
       global_descriptor_technique: "cosplace"
-      nn_checkpoint: "models/cosplace_resnet18_64.pth"
+      nn_checkpoint: "models/resnet101_512.pth"
       cosplace:
-        backbone: "resnet18"
-        descriptor_dim: 64
+        backbone: "resnet101"
+        descriptor_dim: 512
     neighbor_management:
       enable_neighbor_monitoring: true
       max_heartbeat_delay_sec: 5.0
