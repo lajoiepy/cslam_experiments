@@ -474,7 +474,7 @@ def generate_launch_description():
         DeclareLaunchArgument('log_level',
                               default_value='info',
                               description=''),
-        DeclareLaunchArgument('queue_size', default_value='20',
+        DeclareLaunchArgument('queue_size', default_value='5',
                               description=''),
         DeclareLaunchArgument(
             'qos',
@@ -510,7 +510,7 @@ def generate_launch_description():
         ),
         DeclareLaunchArgument(
             'approx_sync',
-            default_value='true',
+            default_value='false',
             description=
             'If timestamps of the input topics should be synchronized using approximate or exact time policy.'
         ),

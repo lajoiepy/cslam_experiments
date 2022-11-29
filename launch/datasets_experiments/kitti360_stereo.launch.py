@@ -74,10 +74,11 @@ def launch_setup(context, *args, **kwargs):
         odom_proc = IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(get_package_share_directory('cslam_experiments'), 'launch',
-                             'odometry', 'rtabmap_kitti_lidar_odometry.launch.py')),
+                             'odometry', 'rtabmap_kitti_stereo_odometry.launch.py')),
             launch_arguments={
                 "namespace": "/r" + str(i),
-                'log_level': "info",
+                'log_level': "warn",
+                "use_sim_time": "false",
                 "robot_id": str(i),
             }.items(),
         )
@@ -94,7 +95,7 @@ def launch_setup(context, *args, **kwargs):
     tf_process1 = Node(
         package="tf2_ros",
         executable="static_transform_publisher",
-        arguments="0 0 0 0 0 0 base_link camera_link".split(" "),
+        arguments="0 0 0 0 0 0 base_link camera_gray_left".split(" "),
         parameters=[]
     )
 
@@ -138,10 +139,10 @@ def generate_launch_description():
         DeclareLaunchArgument('robot_delay_s', default_value='350', description="Delay between launching each robot. Ajust depending on the computing power of your machine."),
         DeclareLaunchArgument('launch_delay_s', default_value='10', description="Delay between launching the bag and the robot. In order to let the robot initialize properly and not loose the first bag data frames."),
         DeclareLaunchArgument('config_file',
-                              default_value='kitti_stereo.yaml',
+                              default_value='kitti360_stereo.yaml',
                               description=''),
-        DeclareLaunchArgument('rate', default_value='0.1'),
+        DeclareLaunchArgument('rate', default_value='0.5'),
         DeclareLaunchArgument('enable_simulated_rendezvous', default_value='true'),
-        DeclareLaunchArgument('rendezvous_config', default_value='kitti00_5robots.config'),
+        DeclareLaunchArgument('rendezvous_config', default_value='kitti09_5robots.config'),
         OpaqueFunction(function=launch_setup)
     ])
