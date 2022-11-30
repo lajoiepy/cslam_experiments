@@ -10,7 +10,7 @@
       inter_robot_detection_period_sec: 5
       max_queue_size: 10
       similarity_threshold: 0.7
-      global_descriptors_topic: "/global_descriptors"
+      global_descriptors_topic: "global_descriptors"
       image_crop_size: 376
       intra_loop_min_inbetween_keyframes: 8
       pnp_min_inliers: 20
