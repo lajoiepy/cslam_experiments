@@ -44,9 +44,7 @@ def launch_setup(context, *args, **kwargs):
     schedule.append(PushLaunchConfigurations())
     schedule.append(cslam_proc)
     schedule.append(PopLaunchConfigurations())
-    schedule.append(PushLaunchConfigurations())
-    schedule.append(odom_proc)
-    schedule.append(PopLaunchConfigurations())  
+     
     schedule.append(PushLaunchConfigurations())
     schedule.append(camera_proc)
     schedule.append(PopLaunchConfigurations())   
