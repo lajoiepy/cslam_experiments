@@ -9,15 +9,15 @@
       sensor_base_frame_id: "camera_link"
       sensor_type: "stereo"
       inter_robot_loop_closure_budget: 1
-      inter_robot_detection_period_sec: 5
+      inter_robot_detection_period_sec: 1
       max_queue_size: 5
       similarity_threshold: 0.7
       global_descriptors_topic: "/global_descriptors"
       image_crop_size: 376
       intra_loop_min_inbetween_keyframes: 20
       pnp_min_inliers: 20
-      detection_publication_period_sec: 1.0
-      detection_publication_max_elems_per_msg: 10
+      detection_publication_period_sec: 0.1
+      detection_publication_max_elems_per_msg: 100
       enable_intra_robot_loop_closures: true
       keyframe_generation_ratio_threshold: 1.0
       use_vertex_cover_selection: true
@@ -34,9 +34,9 @@
       init_delay_sec: 5.0
       heartbeat_period_sec: 1.0
     backend:
-      pose_graph_optimization_start_period_ms: 600000
+      pose_graph_optimization_start_period_ms: 60000
       pose_graph_optimization_loop_period_ms: 1000
-      max_waiting_time_sec: 240
+      max_waiting_time_sec: 60
       enable_broadcast_tf_frames: true
     evaluation:
       enable_logs: true
@@ -44,6 +44,7 @@
       enable_gps_recording: true
       gps_topic: "gps/fix"
       enable_sparsification_comparison: true
+      enable_pose_timestamps_recording: true
     visualization:
       enable: false
       publishing_period_ms: 1000

@@ -143,6 +143,6 @@ def generate_launch_description():
                               description=''),
         DeclareLaunchArgument('rate', default_value='0.5'),
         DeclareLaunchArgument('enable_simulated_rendezvous', default_value='true'),
-        DeclareLaunchArgument('rendezvous_config', default_value='kitti09_5robots.config'),
+        DeclareLaunchArgument('rendezvous_config', default_value='kitti09_5robots_rdv.config'),
         OpaqueFunction(function=launch_setup)
     ])
