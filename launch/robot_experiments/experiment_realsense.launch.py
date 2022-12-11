@@ -27,23 +27,11 @@ def launch_setup(context, *args, **kwargs):
         }.items(),
     )
 
-    odom_proc = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(get_package_share_directory('cslam_experiments'), 'launch',
-                         'odometry', 'rtabmap_rgbd_odometry.launch.py')),
-        launch_arguments={
-            "namespace": "/r" + LaunchConfiguration('robot_id').perform(context),
-            'log_level': "fatal",
-            "robot_id": LaunchConfiguration('robot_id').perform(context),
-        }.items(),
-    )
-
-    
     # Camera
     camera_proc = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(get_package_share_directory('cslam_experiments'), 'launch',
-                         'sensors', 'realsense_d400.launch.py')),
+                         'sensors', 'realsenses.launch.py')),
         launch_arguments={
             "namespace": "/r" + LaunchConfiguration('robot_id').perform(context),
         }.items(),
@@ -56,9 +44,7 @@ def launch_setup(context, *args, **kwargs):
     schedule.append(PushLaunchConfigurations())
     schedule.append(cslam_proc)
     schedule.append(PopLaunchConfigurations())
-    schedule.append(PushLaunchConfigurations())
-    schedule.append(odom_proc)
-    schedule.append(PopLaunchConfigurations())  
+     
     schedule.append(PushLaunchConfigurations())
     schedule.append(camera_proc)
     schedule.append(PopLaunchConfigurations())   
