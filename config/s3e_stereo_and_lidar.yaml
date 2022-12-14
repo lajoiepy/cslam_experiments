@@ -15,7 +15,7 @@
       global_descriptors_topic: "/global_descriptors"
       image_crop_size: 376
       intra_loop_min_inbetween_keyframes: 20
-      pnp_min_inliers: 6
+      pnp_min_inliers: 12
       detection_publication_period_sec: 1.0
       detection_publication_max_elems_per_msg: 10
       enable_intra_robot_loop_closures: true
@@ -24,10 +24,10 @@
       map_manager_process_period_ms: 100
       enable_sparsification: true
       global_descriptor_technique: "cosplace"
-      nn_checkpoint: "models/cosplace_resnet18_64.pth"
+      nn_checkpoint: "models/resnet101_512.pth"
       cosplace:
-        backbone: "resnet18"
-        descriptor_dim: 64
+        backbone: "resnet101"
+        descriptor_dim: 512
     neighbor_management:
       enable_neighbor_monitoring: true
       max_heartbeat_delay_sec: 5.0

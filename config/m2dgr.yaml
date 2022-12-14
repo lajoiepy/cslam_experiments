@@ -9,11 +9,11 @@
       inter_robot_loop_closure_budget: 1
       inter_robot_detection_period_sec: 5
       max_queue_size: 10
-      similarity_threshold: 0.5
+      similarity_threshold: 0.7
       global_descriptors_topic: "/global_descriptors"
       intra_loop_min_inbetween_keyframes: 20
-      detection_publication_period_sec: 1.0
-      detection_publication_max_elems_per_msg: 10
+      detection_publication_period_sec: 0.2
+      detection_publication_max_elems_per_msg: 100
       enable_intra_robot_loop_closures: true
       keyframe_generation_ratio_distance: 0.5
       pointcloud_odom_approx_time_sync_s: 0.1

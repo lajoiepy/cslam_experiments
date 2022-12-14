@@ -212,15 +212,17 @@ def launch_setup(context, *args, **kwargs):
                 LaunchConfiguration("args"),
                 LaunchConfiguration("odom_args"),
                 # # Ensure that we don't lose tracking
-                # '--Vis/MinInliers',
-                # '8',
-                # # Produce more keyframes
-                # '--Odom/KeyFrameThr',
-                # '0.0',
-                # '--Odom/VisKeyFrameThr',
-                # '0.0',
-                # '--Odom/ScanKeyFrameThr',
-                # '0.0',
+                '--Vis/MinInliers',
+                '8',
+                # Produce more keyframes
+                '--Odom/KeyFrameThr',
+                '0.0',
+                '--Odom/VisKeyFrameThr',
+                '0.0',
+                '--Odom/ScanKeyFrameThr',
+                '0.0',
+                '--Stereo/MaxDisparity',
+                '256.0',
                 '--ros-args',
                 '--log-level',
                 LaunchConfiguration("log_level"),
@@ -482,7 +484,7 @@ def generate_launch_description():
             'Used with VIO approaches and for SLAM graph optimization (gravity constraints).'
         ),
         DeclareLaunchArgument('wait_imu_to_init',
-                              default_value='false',
+                              default_value='true',
                               description=''),
 
         # User Data

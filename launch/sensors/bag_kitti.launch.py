@@ -48,7 +48,7 @@ def launch_setup(context, *args, **kwargs):
                         '/gps/fix',
                         '/kitti/oxts/imu:=' +
                         LaunchConfiguration('namespace').perform(context) +
-                        '/imu/data'
+                        '/imu/data',
                     ],
                     name='bag',
                     output='screen',
