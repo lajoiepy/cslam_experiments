@@ -65,7 +65,7 @@ def launch_setup(context, *args, **kwargs):
 
         # ICP odometry
         Node(
-            package='rtabmap_ros', executable='icp_odometry', output="screen",
+            package='rtabmap_ros', executable='icp_odometry', output="log",
             condition=IfCondition(LaunchConfiguration('icp_odometry')),
             parameters=[{
                 "frame_id": LaunchConfiguration('frame_id'),
@@ -141,7 +141,7 @@ def generate_launch_description():
         DeclareLaunchArgument('wait_for_transform', default_value='0.2',            description=''),
         DeclareLaunchArgument('rtabmap_args',   default_value='',                   description='Backward compatibility, use "args" instead.'),
         DeclareLaunchArgument('launch_prefix',  default_value='',                   description='For debugging purpose, it fills prefix tag of the nodes, e.g., "xterm -e gdb -ex run --args"'),
-        DeclareLaunchArgument('output',         default_value='screen',             description='Control node output (screen or log).'),
+        DeclareLaunchArgument('output',         default_value='log',             description='Control node output (screen or log).'),
         
         DeclareLaunchArgument('ground_truth_frame_id',      default_value='', description='e.g., "world"'),
         DeclareLaunchArgument('ground_truth_base_frame_id', default_value='', description='e.g., "tracker", a fake frame matching the frame "frame_id" (but on different TF tree)'),
@@ -195,7 +195,7 @@ def generate_launch_description():
         DeclareLaunchArgument('odom_guess_min_rotation',    default_value='0.0',   description=''),
         
         # imu
-        DeclareLaunchArgument('imu_topic',        default_value='/imu', description='Used with VIO approaches and for SLAM graph optimization (gravity constraints).'),
+        DeclareLaunchArgument('imu_topic',        default_value='/vectornav/imu', description='Used with VIO approaches and for SLAM graph optimization (gravity constraints).'),
         DeclareLaunchArgument('wait_imu_to_init', default_value='true',     description=''),
         
         # User Data

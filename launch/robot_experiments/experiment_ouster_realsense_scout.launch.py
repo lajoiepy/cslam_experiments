@@ -45,7 +45,7 @@ def launch_setup(context, *args, **kwargs):
             launch_arguments={
                 "namespace": "",
                 "robot_id": LaunchConfiguration('robot_id').perform(context),
-                'log_level': "info",
+                'log_level': "error",
             }.items(),
         )
 
@@ -73,7 +73,7 @@ def launch_setup(context, *args, **kwargs):
 
     tf_process_imu = Node(package="tf2_ros",
                       executable="static_transform_publisher",
-                      arguments="-0.13 0.045 -0.02 0 0 3.14159 base_link vectornav".split(" "),
+                      arguments="0.0679 -0.073 0.342 3.14159 0 3.14159 base_link vectornav".split(" "),
                       parameters=[])
 
     zenoh_dds_brigde_process = ExecuteProcess(
