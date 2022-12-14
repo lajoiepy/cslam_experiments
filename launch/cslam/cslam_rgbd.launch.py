@@ -34,7 +34,7 @@ def launch_setup(context, *args, **kwargs):
                                     LaunchConfiguration('max_nb_robots'),
                                 }
                             ],
-                            prefix="",#LaunchConfiguration('launch_prefix_cslam'),
+                            prefix="",#"xterm -e gdb -ex run --args",#LaunchConfiguration('launch_prefix_cslam'),
                             namespace=LaunchConfiguration('namespace'))
 
     pose_graph_manager_node = Node(package='cslam',
@@ -50,7 +50,7 @@ def launch_setup(context, *args, **kwargs):
                                            "evaluation.rendezvous_schedule_file": LaunchConfiguration('rendezvous_schedule_file'),
                                        }
                                    ],
-                                   prefix=LaunchConfiguration('launch_prefix_cslam'),# "gdbserver localhost:3000",
+                                   prefix="",#"gdb -ex run --args",#"gdbserver localhost:3000",
                                    namespace=LaunchConfiguration('namespace'))
 
     return [

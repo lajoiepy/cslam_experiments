@@ -56,7 +56,7 @@ def generate_launch_description():
 
     return LaunchDescription([
         DeclareLaunchArgument('robot_id', default_value='0'),
-        DeclareLaunchArgument('max_nb_robots', default_value='2'),
+        DeclareLaunchArgument('max_nb_robots', default_value='5'),
         DeclareLaunchArgument('cslam_config_file',
                               default_value='realsense_rgbd.yaml',
                               description=''),
