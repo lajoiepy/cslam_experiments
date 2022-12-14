@@ -3,7 +3,7 @@ import os
 from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
-from launch.actions import TimerAction, OpaqueFunction, PushLaunchConfigurations, PopLaunchConfigurations, DeclareLaunchArgument, IncludeLaunchDescription
+from launch.actions import TimerAction, OpaqueFunction, PushLaunchConfigurations, PopLaunchConfigurations, DeclareLaunchArgument, IncludeLaunchDescription, ExecuteProcess, SetEnvironmentVariable
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
 import launch_testing
@@ -63,16 +63,28 @@ def launch_setup(context, *args, **kwargs):
 
     tf_process = Node(package="tf2_ros",
                       executable="static_transform_publisher",
-                      arguments="0 0 0 0 0 0 laser_sensor_frame base_link".split(" "),
+                      arguments="0 0 0 0 0 0 base_link laser_sensor_frame".split(" "),
+                      parameters=[])
+
+    tf_process2 = Node(package="tf2_ros",
+                      executable="static_transform_publisher",
+                      arguments="0 0 0 0 0 0 base_link laser_data_frame".split(" "),
                       parameters=[])
 
     tf_process_imu = Node(package="tf2_ros",
                       executable="static_transform_publisher",
-                      arguments="-0.13 0.045 -0.02 0 0 0 laser_sensor_frame vectornav".split(" "),
+                      arguments="-0.13 0.045 -0.02 0 0 0 base_link vectornav".split(" "),
                       parameters=[])
 
+    zenoh_dds_brigde_process = ExecuteProcess(
+                        cmd=['zenoh-bridge-dds', '-d', LaunchConfiguration('robot_id').perform(context), '--allow', '/cslam/.*']
+                    )
+    
     # Launch schedule
     schedule = []
+
+    schedule.append(SetEnvironmentVariable('ROS_DOMAIN_ID',  LaunchConfiguration('robot_id').perform(context)))
+    schedule.append(zenoh_dds_brigde_process)
 
     schedule.append(PushLaunchConfigurations())
     schedule.append(cslam_proc)
@@ -93,6 +105,10 @@ def launch_setup(context, *args, **kwargs):
     schedule.append(PushLaunchConfigurations())
     schedule.append(tf_process)
     schedule.append(PopLaunchConfigurations())  
+
+    schedule.append(PushLaunchConfigurations())
+    schedule.append(tf_process2)
+    schedule.append(PopLaunchConfigurations()) 
 
     schedule.append(PushLaunchConfigurations())
     schedule.append(tf_process_imu)

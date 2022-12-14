@@ -9,15 +9,15 @@
       inter_robot_loop_closure_budget: 1
       inter_robot_detection_period_sec: 5
       max_queue_size: 100
-      similarity_threshold: 0.7
+      similarity_threshold: 0.1
       global_descriptors_topic: "global_descriptors"
       image_crop_size: 376
       intra_loop_min_inbetween_keyframes: 8
       pnp_min_inliers: 20
       detection_publication_period_sec: 1.0
       detection_publication_max_elems_per_msg: 10
-      enable_intra_robot_loop_closures: true
-      keyframe_generation_ratio_threshold: 0.1
+      enable_intra_robot_loop_closures: false
+      keyframe_generation_ratio_threshold: 0.7
       use_vertex_cover_selection: true
       map_manager_process_period_ms: 10
       enable_sparsification: true

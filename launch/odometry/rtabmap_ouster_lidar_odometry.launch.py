@@ -97,7 +97,7 @@ def launch_setup(context, *args, **kwargs):
             remappings=[
                 ("scan", LaunchConfiguration('scan_topic')),
                 ("scan_cloud", LaunchConfiguration('scan_cloud_topic').perform(context)),
-                ("odom", LaunchConfiguration('odom_topic')),
+                ("odom", "/r" + LaunchConfiguration('robot_id').perform(context) + "/" + LaunchConfiguration('odom_topic').perform(context)),
                 ("imu", LaunchConfiguration('imu_topic').perform(context))],
             arguments=[LaunchConfiguration("args"), LaunchConfiguration("odom_args"),
                 '--ros-args'
@@ -137,7 +137,7 @@ def generate_launch_description():
         DeclareLaunchArgument('namespace',      default_value='rtabmap',            description=''),
         DeclareLaunchArgument('database_path',  default_value='~/.ros/rtabmap.db',  description='Where is the map saved/loaded.'),
         DeclareLaunchArgument('queue_size',     default_value='100',                 description=''),
-        DeclareLaunchArgument('qos',            default_value='1',                  description='General QoS used for sensor input data: 0=system default, 1=Reliable, 2=Best Effort.'),
+        DeclareLaunchArgument('qos',            default_value='0',                  description='General QoS used for sensor input data: 0=system default, 1=Reliable, 2=Best Effort.'),
         DeclareLaunchArgument('wait_for_transform', default_value='0.2',            description=''),
         DeclareLaunchArgument('rtabmap_args',   default_value='',                   description='Backward compatibility, use "args" instead.'),
         DeclareLaunchArgument('launch_prefix',  default_value='',                   description='For debugging purpose, it fills prefix tag of the nodes, e.g., "xterm -e gdb -ex run --args"'),
@@ -146,7 +146,7 @@ def generate_launch_description():
         DeclareLaunchArgument('ground_truth_frame_id',      default_value='', description='e.g., "world"'),
         DeclareLaunchArgument('ground_truth_base_frame_id', default_value='', description='e.g., "tracker", a fake frame matching the frame "frame_id" (but on different TF tree)'),
         
-        DeclareLaunchArgument('approx_sync',  default_value='false',            description='If timestamps of the input topics should be synchronized using approximate or exact time policy.'),
+        DeclareLaunchArgument('approx_sync',  default_value='true',            description='If timestamps of the input topics should be synchronized using approximate or exact time policy.'),
         DeclareLaunchArgument('approx_sync_max_interval',  default_value='0.0', description='(sec) 0 means infinite interval duration (used with approx_sync=true)'),
 
         # RGB-D related topics
@@ -175,7 +175,7 @@ def generate_launch_description():
        
         # LiDAR
         DeclareLaunchArgument('subscribe_scan',       default_value='false',       description=''),
-        DeclareLaunchArgument('scan_topic',           default_value='/scan',       description=''),
+        DeclareLaunchArgument('scan_topic',           default_value='/scan_topic',       description=''),
         DeclareLaunchArgument('subscribe_scan_cloud', default_value='true',       description=''),
         DeclareLaunchArgument('scan_cloud_topic',     default_value='/points', description=''),
         DeclareLaunchArgument('scan_normal_k',        default_value='0',           description=''),
@@ -196,7 +196,7 @@ def generate_launch_description():
         
         # imu
         DeclareLaunchArgument('imu_topic',        default_value='/imu', description='Used with VIO approaches and for SLAM graph optimization (gravity constraints).'),
-        DeclareLaunchArgument('wait_imu_to_init', default_value='false',     description=''),
+        DeclareLaunchArgument('wait_imu_to_init', default_value='true',     description=''),
         
         # User Data
         DeclareLaunchArgument('subscribe_user_data',   default_value='false',            description='User data synchronized subscription.'),
