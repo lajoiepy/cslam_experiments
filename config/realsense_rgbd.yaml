@@ -7,19 +7,19 @@
       odom_topic: "odom"
       sensor_type: "rgbd"
       inter_robot_loop_closure_budget: 1
-      inter_robot_detection_period_sec: 5
+      inter_robot_detection_period_sec: 1
       max_queue_size: 100
-      similarity_threshold: 0.7
+      similarity_threshold: 0.5
       global_descriptors_topic: "global_descriptors"
       image_crop_size: 376
       intra_loop_min_inbetween_keyframes: 8
-      pnp_min_inliers: 20
+      pnp_min_inliers: 100
       detection_publication_period_sec: 1.0
       detection_publication_max_elems_per_msg: 10
       enable_intra_robot_loop_closures: false
-      keyframe_generation_ratio_threshold: 0.4
+      keyframe_generation_ratio_threshold: 0.5
       use_vertex_cover_selection: true
-      map_manager_process_period_ms: 10
+      map_manager_process_period_ms: 100
       enable_sparsification: true
       global_descriptor_technique: "cosplace"
       nn_checkpoint: "models/resnet18_64.pth"
@@ -44,6 +44,6 @@
       enable_sparsification_comparison: true
     visualization:
       enable: true
-      publishing_period_ms: 1000
-      voxel_size: 0.05
-      max_range: 3.0
+      publishing_period_ms: 500
+      voxel_size: 0.2
+      max_range: 4.0
