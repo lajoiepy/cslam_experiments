@@ -85,7 +85,7 @@ def launch_setup(context, *args, **kwargs):
                 "guess_min_rotation": LaunchConfiguration('odom_guess_min_rotation'),
                 "Icp/MaxTranslation": "5",
                 "queue_size_odom": "100",
-                "ground_normals_up": "true",
+                #"ground_normals_up": "true",
                 "Icp/VoxelSize": "0.4",
                 "Icp/MaxCorrespondenceDistance": "4.0",
                 "Icp/PointToPlaneK": "20",
