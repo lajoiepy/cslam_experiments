@@ -11,7 +11,7 @@
       inter_robot_loop_closure_budget: 1
       inter_robot_detection_period_sec: 1
       max_queue_size: 10
-      similarity_threshold: 0.5
+      similarity_threshold: 0.8
       global_descriptors_topic: "global_descriptors"
       image_crop_size: 376
       intra_loop_min_inbetween_keyframes: 20

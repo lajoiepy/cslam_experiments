@@ -5,7 +5,6 @@ from launch_ros.actions import Node
 
 
 def launch_setup(context, *args, **kwargs):
-    # TODO: Replace with robot state publisher in the future
     tf_prefix = LaunchConfiguration("tf_prefix").perform(context) + "_"
     return [
         Node(
