@@ -1,5 +1,5 @@
 ## Experiments
-This repo contains Swarm-SLAM experiments examples.
+This repo contains Swarm-SLAM launch examples.
 
 [Datasets launch files](https://github.com/lajoiepy/cslam_experiments/tree/main/launch/datasets_experiments)
 
