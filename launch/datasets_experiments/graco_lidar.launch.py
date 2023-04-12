@@ -147,7 +147,7 @@ def generate_launch_description():
                               default_value='graco_lidar.yaml',
                               description=''),
         DeclareLaunchArgument('rate', default_value='1.0'),
-        DeclareLaunchArgument('enable_simulated_rendezvous', default_value='true'),
+        DeclareLaunchArgument('enable_simulated_rendezvous', default_value='false'),
         DeclareLaunchArgument('rendezvous_config', default_value='graco_ground.config'),
         OpaqueFunction(function=launch_setup)
     ])

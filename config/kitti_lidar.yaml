@@ -31,11 +31,11 @@
       max_waiting_time_sec: 3600
       enable_broadcast_tf_frames: true
     evaluation:
-      enable_logs: true
+      enable_logs: false
       log_folder: "results"
-      enable_gps_recording: true
+      enable_gps_recording: false
       gps_topic: "gps/fix"
-      enable_sparsification_comparison: true
+      enable_sparsification_comparison: false
     visualization:
       enable: true
       publishing_period_ms: 1000

@@ -133,7 +133,7 @@ def generate_launch_description():
                               default_value='kitti_lidar.yaml',
                               description=''),
         DeclareLaunchArgument('rate', default_value='0.2'),
-        DeclareLaunchArgument('enable_simulated_rendezvous', default_value='true'),
+        DeclareLaunchArgument('enable_simulated_rendezvous', default_value='false'),
         DeclareLaunchArgument('rendezvous_config', default_value='kitti00_2robots_lidar.config'),
         OpaqueFunction(function=launch_setup)
     ])
