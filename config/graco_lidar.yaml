@@ -5,7 +5,7 @@
       sensor_type: "lidar"
       pointcloud_topic: "pointcloud"
       voxel_size: 0.5
-      registration_min_inliers: 80
+      registration_min_inliers: 60
       inter_robot_loop_closure_budget: 1
       inter_robot_detection_period_sec: 5
       enable_sparsification: true
