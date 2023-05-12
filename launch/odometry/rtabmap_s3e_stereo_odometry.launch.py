@@ -111,7 +111,7 @@ def launch_setup(context, *args, **kwargs):
 
         # Stereo odometry
         Node(
-            package='rtabmap_ros',
+            package='rtabmap_odom',
             executable='stereo_odometry',
             output="screen",
             condition=IfCondition(

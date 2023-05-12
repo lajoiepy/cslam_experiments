@@ -50,7 +50,7 @@ def launch_setup(context, *args, **kwargs):
                                            "evaluation.rendezvous_schedule_file": LaunchConfiguration('rendezvous_schedule_file'),
                                        }
                                    ],
-                                   prefix=LaunchConfiguration('launch_prefix_cslam'),
+                                   prefix=LaunchConfiguration('launch_prefix_cslam'),#"xterm -e gdb -ex run --args",#
                                    namespace=LaunchConfiguration('namespace'))
 
     return [

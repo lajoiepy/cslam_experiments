@@ -19,7 +19,7 @@ def launch_setup(context, *args, **kwargs):
     return [
         # Nodes to launch
         Node(
-            package='rtabmap_ros', executable='rgbd_odometry', output='screen', name='rgbd_odometry',
+            package='rtabmap_odom', executable='rgbd_odometry', output='screen', name='rgbd_odometry',
             parameters=parameters,
             remappings=remappings,
             ),

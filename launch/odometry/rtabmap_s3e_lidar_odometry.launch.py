@@ -65,7 +65,7 @@ def launch_setup(context, *args, **kwargs):
 
         # ICP odometry
         Node(
-            package='rtabmap_ros', executable='icp_odometry', output="screen",
+            package='rtabmap_odom', executable='icp_odometry', output="screen",
             condition=IfCondition(LaunchConfiguration('icp_odometry')),
             parameters=[{
                 "frame_id": LaunchConfiguration('frame_id'),
