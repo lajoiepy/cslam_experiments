@@ -1,0 +1,45 @@
+FROM ros:humble-perception
+
+RUN apt-get update
+RUN apt-get install python3-pip python3-vcstool -y
+
+RUN apt-get install nano -y
+
+RUN git clone https://github.com/MISTLab/Swarm-SLAM.git &&\
+    cd Swarm-SLAM &&\
+    mkdir src &&\
+    vcs import src < cslam.repos
+
+RUN cd Swarm-SLAM &&\
+    pip install -r requirements.txt
+
+RUN cd Swarm-SLAM &&\
+    rosdep update &&\
+    rosdep install --from-paths src --ignore-src -r -y
+
+RUN cd Swarm-SLAM &&\
+    . /opt/ros/humble/setup.sh &&\
+    colcon build
+
+RUN git clone https://github.com/MIT-SPARK/TEASER-plusplus.git &&\
+    cd TEASER-plusplus &&\
+    mkdir build &&\
+    cd build &&\
+    cmake -DTEASERPP_PYTHON_VERSION=3.10 .. &&\
+    make teaserpp_python &&\
+    cd python &&\
+    pip install .
+
+RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+RUN echo "source Swarm-SLAM/install/setup.bash" >> ~/.bashrc
+
+# Update Swarm-SLAM packages
+RUN cd Swarm-SLAM &&\
+    cd src/cslam &&\
+    git pull &&\
+    cd ../cslam_experiments &&\
+    git pull &&\
+    cd ../cslam_interfaces &&\
+    git pull &&\
+    cd ../.. &&\
+    colcon build
