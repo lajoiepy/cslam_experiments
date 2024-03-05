@@ -28,7 +28,7 @@ def launch_setup(context, *args, **kwargs):
     )
 
     zenoh_dds_brigde_process = ExecuteProcess(
-                        cmd=['zenoh-bridge-dds', '-d', LaunchConfiguration('robot_id').perform(context), '--allow', '/cslam/.*']
+                        cmd=['zenoh-bridge-ros2dds', '-c', os.path.join(get_package_share_directory("cslam_experiments"), "config", "zenoh", "zenoh_cslam.json5")],
                     )
     
     # Launch schedule
