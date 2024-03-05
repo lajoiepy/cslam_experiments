@@ -234,9 +234,6 @@ def launch_setup(context, *args, **kwargs):
 
 def generate_launch_description():
 
-    config_rviz = os.path.join(get_package_share_directory('rtabmap_ros'),
-                               'launch', 'config', 'rgbd.rviz')
-
     return LaunchDescription([
 
         # Arguments
@@ -269,7 +266,7 @@ def generate_launch_description():
                               default_value='~/.ros/rtabmap_gui.ini',
                               description='Configuration path of rtabmapviz.'),
         DeclareLaunchArgument('rviz_cfg',
-                              default_value=config_rviz,
+                              default_value='',
                               description='Configuration path of rviz2.'),
         DeclareLaunchArgument(
             'frame_id',

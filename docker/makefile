@@ -25,4 +25,4 @@ attach:
 	docker exec -it swarmslam bash
 
 lidar_cslam:
-	docker exec -it swarmslam bash -c "ros2 launch cslam_experiments experiment_lidar.launch.py robot_id:=$(ROBOT_ID)"
+	docker exec -it swarmslam bash -c "source /opt/ros/humble/setup.bash; source Swarm-SLAM/install/setup.bash; ros2 launch cslam_experiments experiment_lidar.launch.py robot_id:=$(ROBOT_ID)"
