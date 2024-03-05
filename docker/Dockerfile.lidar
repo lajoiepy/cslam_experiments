@@ -33,6 +33,10 @@ RUN git clone https://github.com/MIT-SPARK/TEASER-plusplus.git &&\
 RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
 RUN echo "source Swarm-SLAM/install/setup.bash" >> ~/.bashrc
 
+ADD https://api.github.com/repos/lajoiepy/cslam/commits?per_page=1 head_cslam
+ADD https://api.github.com/repos/lajoiepy/cslam_interfaces/commits?per_page=1 head_cslam_interfaces
+ADD https://api.github.com/repos/lajoiepy/cslam_experiments/commits?per_page=1 head_cslam_experiments
+
 # Update Swarm-SLAM packages
 RUN cd Swarm-SLAM &&\
     cd src/cslam &&\
