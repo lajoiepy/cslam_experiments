@@ -50,7 +50,7 @@ def generate_launch_description():
         DeclareLaunchArgument('robot_id', default_value='0'),
         DeclareLaunchArgument('max_nb_robots', default_value='5'),
         DeclareLaunchArgument('cslam_config_file',
-                              default_value='realsense_rgbd.yaml',
+                              default_value='ouster_lidar.yaml',
                               description=''),
         OpaqueFunction(function=launch_setup)
     ])
