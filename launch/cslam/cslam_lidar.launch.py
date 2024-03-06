@@ -35,6 +35,9 @@ def launch_setup(context, *args, **kwargs):
                                 }
                             ],
                             prefix=LaunchConfiguration('launch_prefix_cslam'),
+                            remappings=[
+                                ('/r' + LaunchConfiguration('robot_id').perform(context) + '/pointcloud', '/points'),
+                            ],
                             namespace=LaunchConfiguration('namespace'))
 
     pose_graph_manager_node = Node(package='cslam',
