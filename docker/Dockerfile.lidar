@@ -48,7 +48,9 @@ RUN cd Swarm-SLAM &&\
     cd ../.. &&\
     colcon build
 
-# Install Zenoh
+# Install Zenoh in one of the following ways
+## From deb packages
 # RUN echo "deb [trusted=yes] https://download.eclipse.org/zenoh/debian-repo/ /" | tee -a /etc/apt/sources.list > /dev/null
 # RUN apt-get update && apt-get install zenoh-bridge-ros2dds
-COPY zenoh-bridge-ros2dds /usr/bin/zenoh-bridge-ros2dds
+## Directly from binary file
+# COPY zenoh-bridge-ros2dds /usr/bin/zenoh-bridge-ros2dds
