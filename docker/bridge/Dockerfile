@@ -11,6 +11,8 @@ RUN apt update && apt install -y ros-foxy-desktop libpython3-dev python3-pip \
     rm -rf /var/lib/apt/lists/*  &&\
     apt-get clean
 
+RUN apt update && apt install -y 
+
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]

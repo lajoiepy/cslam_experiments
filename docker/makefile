@@ -10,7 +10,7 @@ gpu_run:
 	docker run -itd --gpus all -v /dev:/dev -e NVIDIA_DRIVER_CAPABILITIES=all --rm --ipc host --net host --pid host --name swarmslam swarmslam
 
 agx_run:
-	docker run -itd --runtime nvidia --gpus all -v /dev:/dev -v $(PWD)/../:/Swarm-SLAM/src/cslam_experiments -e NVIDIA_DRIVER_CAPABILITIES=all --rm --ipc host --net host --pid host --name swarmslam swarmslam
+	docker run -td --runtime nvidia --gpus all -v /dev:/dev -v /home/rover/swarmslam/cslam_experiments:/Swarm-SLAM/src/cslam_experiments -e NVIDIA_DRIVER_CAPABILITIES=all --rm --ipc host --net host --pid host --name swarmslam swarmslam
 
 start:
 	docker start swarmslam
@@ -25,10 +25,7 @@ attach:
 	docker exec -it swarmslam bash
 
 swarmslam-lidar:
-	docker exec -it swarmslam bash -c "source /opt/ros/humble/setup.bash; source Swarm-SLAM/install/setup.bash; export ROS_DOMAIN_ID=0; ros2 launch /Swarm-SLAM/src/cslam_experiments/launch/robot_experiments/experiment_lidar.launch.py robot_id:=$(ROBOT_ID)"
-
-bridge:
-	bash -c "source /opt/ros/noetic/setup.bash; source /opt/ros/foxy/setup.bash; export ROS_DOMAIN_ID=0; ros2 run ros1_bridge dynamic_bridge --bridge-all-1to2-topics"
+	docker exec -t swarmslam bash -c "source /opt/ros/humble/setup.bash; source Swarm-SLAM/install/setup.bash; export ROS_DOMAIN_ID=$(ROBOT_ID); ros2 launch /Swarm-SLAM/src/cslam_experiments/launch/robot_experiments/experiment_lidar.launch.py robot_id:=$(ROBOT_ID)"
 
 relay:
-	docker exec -it swarmslam bash -c "source /opt/ros/humble/setup.bash; export ROS_DOMAIN_ID=0; ros2 run topic_tools relay /os_cloud_node/points /r0/pointcloud"
+	docker exec -t swarmslam bash -c "source /opt/ros/humble/setup.bash; ros2 run topic_tools relay /os_cloud_node/points /r$(ROBOT_ID)/pointcloud"
