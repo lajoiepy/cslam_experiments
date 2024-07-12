@@ -48,7 +48,12 @@ RUN cd Swarm-SLAM &&\
     cd ../.. &&\
     colcon build
 
+
 # Install Zenoh
 # RUN echo "deb [trusted=yes] https://download.eclipse.org/zenoh/debian-repo/ /" | tee -a /etc/apt/sources.list > /dev/null
 # RUN apt-get update && apt-get install zenoh-bridge-ros2dds
 COPY zenoh-bridge-ros2dds /usr/bin/zenoh-bridge-ros2dds
+RUN apt-get update && apt-get install -y ros-humble-topic-tools
+
+COPY force_rtps.xml /force_rtps.xml
+ENV FASTRTPS_DEFAULT_PROFILES_FILE=/force_rtps.xml
