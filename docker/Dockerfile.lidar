@@ -1,4 +1,4 @@
-FROM ros:humble-perception
+FROM ros:jazzy-perception
 
 RUN apt-get update
 RUN apt-get install python3-pip python3-vcstool -y
@@ -11,14 +11,14 @@ RUN git clone https://github.com/MISTLab/Swarm-SLAM.git &&\
     vcs import src < cslam.repos
 
 RUN cd Swarm-SLAM &&\
-    pip install -r requirements.txt
+    pip install --break-system-packages -r requirements.txt
 
 RUN cd Swarm-SLAM &&\
     rosdep update &&\
     rosdep install --from-paths src --ignore-src -r -y
 
 RUN cd Swarm-SLAM &&\
-    . /opt/ros/humble/setup.sh &&\
+    . /opt/ros/$ROS_DISTRO/setup.sh &&\
     colcon build
 
 RUN git clone https://github.com/MIT-SPARK/TEASER-plusplus.git &&\
@@ -28,9 +28,9 @@ RUN git clone https://github.com/MIT-SPARK/TEASER-plusplus.git &&\
     cmake -DTEASERPP_PYTHON_VERSION=3.10 .. &&\
     make teaserpp_python &&\
     cd python &&\
-    pip install .
+    pip install --break-system-packages .
 
-RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc
 RUN echo "source Swarm-SLAM/install/setup.bash" >> ~/.bashrc
 
 ADD https://api.github.com/repos/lajoiepy/cslam/commits?per_page=1 head_cslam
